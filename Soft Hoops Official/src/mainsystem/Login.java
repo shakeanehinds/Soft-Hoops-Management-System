@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 public class Login {
 
@@ -47,6 +48,7 @@ public class Login {
 	 */
 	private void initialize() {
 		frmSoftHoops = new JFrame();
+		frmSoftHoops.getContentPane().setBackground(new Color(248, 248, 255));
 		frmSoftHoops.setTitle("Soft Hoops");
 		frmSoftHoops.setBounds(100, 100, 930, 537);
 		frmSoftHoops.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

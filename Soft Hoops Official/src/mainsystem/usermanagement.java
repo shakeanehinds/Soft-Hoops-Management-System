@@ -85,7 +85,7 @@ public class usermanagement {
 		frmUserManagement.getContentPane().add(lblUserManagement);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 67, 503, 75);
+		scrollPane.setBounds(20, 67, 728, 107);
 		frmUserManagement.getContentPane().add(scrollPane);
 		
 		userstable = new JTable();
