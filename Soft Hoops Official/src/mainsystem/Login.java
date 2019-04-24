@@ -1,12 +1,12 @@
 package mainsystem;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -27,17 +27,11 @@ public class Login {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void open() {
+		
 					Login window = new Login();
 					window.frmSoftHoops.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+			
 	}
 
 	/**
@@ -68,6 +62,10 @@ public class Login {
 				String vpassword;
 				String role;
 				Connection conn = DBController.getConnection();
+				if(username == null || password == null){
+					JOptionPane.showMessageDialog(null, "Please enter info");
+				}
+				else {
 				try
 				{
 					if (username != null && password != null) {
@@ -88,31 +86,28 @@ public class Login {
 		                		userm.open();
 		                		conn.close();
 		                		frmSoftHoops.setVisible(false);
+		                		frmSoftHoops.dispose();
 		                	}
 		                	else if(role.equals("Coach")) {
-		                		
+		                		playermanagement play = new playermanagement();
+		                		play.open();
+		                		conn.close();
+		                		frmSoftHoops.setVisible(false);
+		                		frmSoftHoops.dispose();
 		                	}
-		                	else if(role.equals("Statsman")){
-		                		
+		                	else if(role.equals("Stats")){
+		                		System.out.println("S");
 		                	}
 		                }
 					}
 					
+					
 				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
-				finally
-				{
-					try{
-						conn.close();
-					}catch(SQLException ex)
-					{
-						ex.printStackTrace();
-					}
+				
 				}
-
 			}
 		});
 		btnLogin.addActionListener(new ActionListener() {
