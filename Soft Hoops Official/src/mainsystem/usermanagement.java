@@ -24,17 +24,10 @@ public class usermanagement {
 	 * Launch the application.
 	 */
 	public static void open() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+		
 					usermanagement window = new usermanagement();
 					window.frmUserManagement.setVisible(true);
 					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**

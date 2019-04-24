@@ -119,7 +119,7 @@ public class Login {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnLogin.setBounds(412, 400, 89, 23);
+		btnLogin.setBounds(406, 307, 89, 23);
 		frmSoftHoops.getContentPane().add(btnLogin);
 		
 		JLabel lblSoftHoops = new JLabel("Soft Hoops");
@@ -128,20 +128,20 @@ public class Login {
 		frmSoftHoops.getContentPane().add(lblSoftHoops);
 		
 		user = new JTextField();
-		user.setBounds(324, 324, 89, 23);
+		user.setBounds(318, 233, 89, 23);
 		frmSoftHoops.getContentPane().add(user);
 		user.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(241, 330, 73, 14);
+		lblUsername.setBounds(235, 237, 73, 14);
 		frmSoftHoops.getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(481, 330, 95, 14);
+		lblPassword.setBounds(475, 237, 95, 14);
 		frmSoftHoops.getContentPane().add(lblPassword);
 		
 		pass = new JPasswordField();
-		pass.setBounds(589, 324, 102, 21);
+		pass.setBounds(583, 234, 102, 21);
 		frmSoftHoops.getContentPane().add(pass);
 	}
 }
