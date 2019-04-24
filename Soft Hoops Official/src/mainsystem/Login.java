@@ -23,6 +23,7 @@ public class Login {
 	private JFrame frmSoftHoops;
 	private JTextField user;
 	private JPasswordField pass;
+	Connection conn = DBController.getConnection();
 
 	/**
 	 * Launch the application.
@@ -61,7 +62,7 @@ public class Login {
 				String vusername;
 				String vpassword;
 				String role;
-				Connection conn = DBController.getConnection();
+				
 				if(username == null || password == null){
 					JOptionPane.showMessageDialog(null, "Please enter info");
 				}
@@ -84,19 +85,23 @@ public class Login {
 		                	if(role.equals("Admin")) {
 		                		usermanagement userm = new usermanagement();
 		                		userm.open();
-		                		conn.close();
+		                		
 		                		frmSoftHoops.setVisible(false);
 		                		frmSoftHoops.dispose();
 		                	}
 		                	else if(role.equals("Coach")) {
 		                		playermanagement play = new playermanagement();
 		                		play.open();
-		                		conn.close();
+		                		
 		                		frmSoftHoops.setVisible(false);
 		                		frmSoftHoops.dispose();
 		                	}
 		                	else if(role.equals("Stats")){
-		                		System.out.println("S");
+		                		game game = new game();
+		                		game.open();
+		                		
+		                		frmSoftHoops.setVisible(false);
+		                		frmSoftHoops.dispose();
 		                	}
 		                }
 					}

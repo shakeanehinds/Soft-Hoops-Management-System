@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 public class usermanagement {
-
+	Connection conn = DBController.getConnection();
 	private JFrame frmUserManagement;
 	private JTable userstable;
 	private JScrollPane scrollPane;
@@ -261,7 +261,7 @@ public class usermanagement {
 	
 	private void showdata() {
 		try {
-			Connection conn = DBController.getConnection();
+			
 			
 		    PreparedStatement st = null;
 			ResultSet rst = null;
@@ -279,11 +279,11 @@ public class usermanagement {
 	}
 	
 	private void createuser(String f, String l, String r, String u, String p) {
-		Connection jon = DBController.getConnection();
+		
 		PreparedStatement gst = null;
 		try {
 			String sql = "insert into users values(?, ?, ?, ?, ?)";
-			gst = jon.prepareStatement(sql);
+			gst = conn.prepareStatement(sql);
 					
 			gst.setString(1, f);
 			gst.setString(2, l);
@@ -293,7 +293,13 @@ public class usermanagement {
 			gst.execute();
 			
 			JOptionPane.showMessageDialog(null, "User Added");
-			userstable.repaint();
+			showdata();
+			
+			fname.setText("");
+			lname.setText("");
+			role.setText("");
+			username.setText("");
+			password.setText("");
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

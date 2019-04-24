@@ -25,7 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class playermanagement {
-
+	Connection conn = DBController.getConnection();
 	private JFrame frame;
 	private JTextField fname;
 	private JTextField lname;
@@ -110,7 +110,48 @@ public class playermanagement {
 		height.setBounds(535, 319, 86, 20);
 		frame.getContentPane().add(height);
 		
+		id = new JTextField();
+		id.setColumns(10);
+		id.setBounds(654, 412, 86, 20);
+		frame.getContentPane().add(id);
+		
+		fouls = new JTextField();
+		fouls.setColumns(10);
+		fouls.setBounds(402, 412, 86, 20);
+		frame.getContentPane().add(fouls);
+		
+		points = new JTextField();
+		points.setColumns(10);
+		points.setBounds(286, 412, 86, 20);
+		frame.getContentPane().add(points);
+		
+		frthrw = new JTextField();
+		frthrw.setColumns(10);
+		frthrw.setBounds(160, 412, 86, 20);
+		frame.getContentPane().add(frthrw);
+		
+		age = new JTextField();
+		age.setColumns(10);
+		age.setBounds(654, 319, 86, 20);
+		frame.getContentPane().add(age);
+		
+		thrp = new JTextField();
+		thrp.setColumns(10);
+		thrp.setBounds(27, 412, 86, 20);
+		frame.getContentPane().add(thrp);
+		
+
+		position = new JTextField();
+		position.setColumns(10);
+		position.setBounds(535, 412, 86, 20);
+		frame.getContentPane().add(position);
+		
 		JButton btnAddPlayer = new JButton("Add Player");
+		btnAddPlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
 		btnAddPlayer.setBounds(773, 310, 105, 38);
 		frame.getContentPane().add(btnAddPlayer);
 		
@@ -166,30 +207,6 @@ public class playermanagement {
 		button_1.setBounds(910, 476, 89, 23);
 		frame.getContentPane().add(button_1);
 		
-		fouls = new JTextField();
-		fouls.setColumns(10);
-		fouls.setBounds(402, 412, 86, 20);
-		frame.getContentPane().add(fouls);
-		
-		points = new JTextField();
-		points.setColumns(10);
-		points.setBounds(286, 412, 86, 20);
-		frame.getContentPane().add(points);
-		
-		frthrw = new JTextField();
-		frthrw.setColumns(10);
-		frthrw.setBounds(160, 412, 86, 20);
-		frame.getContentPane().add(frthrw);
-		
-		age = new JTextField();
-		age.setColumns(10);
-		age.setBounds(654, 319, 86, 20);
-		frame.getContentPane().add(age);
-		
-		thrp = new JTextField();
-		thrp.setColumns(10);
-		thrp.setBounds(27, 412, 86, 20);
-		frame.getContentPane().add(thrp);
 		
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setHorizontalAlignment(SwingConstants.CENTER);
@@ -233,10 +250,6 @@ public class playermanagement {
 		lblId.setBounds(658, 380, 79, 21);
 		frame.getContentPane().add(lblId);
 		
-		id = new JTextField();
-		id.setColumns(10);
-		id.setBounds(654, 412, 86, 20);
-		frame.getContentPane().add(id);
 		
 		JLabel lblPosition_1 = new JLabel("Position");
 		lblPosition_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -245,15 +258,50 @@ public class playermanagement {
 		lblPosition_1.setBounds(538, 380, 79, 21);
 		frame.getContentPane().add(lblPosition_1);
 		
-		position = new JTextField();
-		position.setColumns(10);
-		position.setBounds(535, 412, 86, 20);
-		frame.getContentPane().add(position);
+		
+		btnAddPlayer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String fn = fname.getText();
+				String ln = lname.getText();
+				String te = team.getText();
+				String st = status.getText();
+				String he = height.getText();
+				int ag = Integer.parseInt(age.getText());
+				int threes = Integer.parseInt(thrp.getText());
+				int fthrows = Integer.parseInt(frthrw.getText());
+				int point = Integer.parseInt(points.getText());
+				int foul = Integer.parseInt(fouls.getText());
+				String po = position.getText();
+				int pid = Integer.parseInt(id.getText());
+				
+				
+				
+				PlayerManagementFacade ManagePlayer = new PlayerManagementFacade();
+				
+				ManagePlayer.CreatePlayer(fn, ln, te, st, he, ag, threes, fthrows, point, foul, po, pid);
+				showdata();
+				
+				fname.setText("");
+				lname.setText("");
+				team.setText("");
+				status.setText("");
+				height.setText("");
+				age.setText("");
+				thrp.setText("");
+				frthrw.setText("");
+				points.setText("");
+				fouls.setText("");
+				position.setText("");
+				id.setText("");
+			}
+		});
 	}
 	
 	private void showdata() {
 		try {
-			Connection conn = DBController.getConnection();
+			
 			
 		    PreparedStatement st = null;
 			ResultSet rst = null;
