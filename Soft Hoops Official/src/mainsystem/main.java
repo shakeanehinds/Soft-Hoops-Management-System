@@ -1,8 +1,8 @@
 package mainsystem;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
-import player;
 public class main {
 
 	public static void main(String[] args) {

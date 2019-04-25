@@ -48,8 +48,7 @@ public class playerstatistics {
 	}
 	public int getplayerfrees(){
 		return this.Freethrows;
-		
-		 
+			
 	}
 	public int getplayerpoints(){
 		return this.Points;
@@ -70,6 +69,30 @@ public class playerstatistics {
 		return this.Id;
 		
 		 
+	}
+
+	public void setThreepointers(int threepointers) {
+		Threepointers = threepointers;
+	}
+
+	public void setFreethrows(int freethrows) {
+		Freethrows = freethrows;
+	}
+
+	public void setPoints(int points) {
+		Points = points;
+	}
+
+	public void setFouls(int fouls) {
+		Fouls = fouls;
+	}
+
+	public void setPosition(String position) {
+		Position = position;
+	}
+
+	public void setId(int id) {
+		Id = id;
 	}
 	
 	

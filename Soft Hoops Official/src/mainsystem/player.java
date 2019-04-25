@@ -9,8 +9,8 @@ public class player {
 	private String Lastname;
 	private String Team;
 	private String Status;
-	public String Height;
-	public int Age;
+	private String Height;
+	private int Age;
 	
 	
 	public player(String fname, String lname, String team, String status, String height, int age)    {
@@ -42,34 +42,51 @@ public class player {
 	}
 	
 	public String getplayerfirstname(){
-		return this.Firstname;
-		
-		 
+		return this.Firstname; 
 	}
+	
 	public String getplayerlastname(){
-		return this.Lastname;
-		
-		 
+		return this.Lastname; 
 	}
+	
 	public String getplayerteam(){
-		return this.Team;
-		
-		 
+		return this.Team; 
 	}
+	
 	public String getplayerstatus(){
-		return this.Status;
-		
-		 
+		return this.Status; 
 	}
+	
 	public String getplayerheight(){
 		return this.Height;
-		
-		 
 	}
+	
 	public int getplayerage(){
-		return this.Age;
-		
-		 
+		return this.Age;	 
+	}
+	
+	public void setFirstname(String firstname) {
+		Firstname = firstname;
+	}
+	
+	public void setLastname(String lastname) {
+		Lastname = lastname;
+	}
+
+	public void setTeam(String team) {
+		Team = team;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
+	}
+
+	public void setHeight(String height) {
+		Height = height;
+	}
+
+	public void setAge(int age) {
+		Age = age;
 	}
 	
 	

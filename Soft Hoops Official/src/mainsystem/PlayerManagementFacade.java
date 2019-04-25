@@ -2,9 +2,13 @@ package mainsystem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
+import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
+
+import com.mysql.cj.protocol.Resultset;
+
+import net.proteanit.sql.DbUtils;
 
 public class PlayerManagementFacade {
 	Connection conn = DBController.getConnection();
@@ -16,8 +20,7 @@ public class PlayerManagementFacade {
 		// TODO Auto-generated method stub
 		player aplayer = new player(fn, ln, te, st, he, ag);
 		playerstatistics stats = new playerstatistics(threes, frees, points, fouls, pos, id);
-		ArrayList<String> Player = aplayer.CreatePlayer();
-		ArrayList<String> Stats = stats.CreatePlayerStats();
+		
 		
 		PreparedStatement gst = null;
 		try {
@@ -45,6 +48,43 @@ public class PlayerManagementFacade {
 		
 		
 		
+	}
+	
+	public ResultSet SearchPlayer(int id) {
+		
+		PreparedStatement st = null;
+		ResultSet rst = null;
+		try {
+			
+			
+			String sql = "select * from players where id = ?";
+			st = conn.prepareStatement(sql);
+			st.setInt(1, id);
+			rst = st.executeQuery();
+			
+			
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		
+		return rst;
+	}
+	
+	public void DeletePlayer(int id) {
+		
+		PreparedStatement st = null;
+		try {
+			String sql = "delete from players where id = ?";
+			st = conn.prepareStatement(sql);
+			st.setInt(1, id);
+			st.execute();
+			
+			
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 
 }

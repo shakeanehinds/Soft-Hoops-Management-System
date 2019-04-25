@@ -36,17 +36,9 @@ public class usermanagement {
 	private JTextField username;
 	private JTextField password;
 	private JButton btnLogout;
-	private JButton update;
-	private JTextField upassword;
-	private JTextField uuser;
-	private JTextField urole;
-	private JTextField ufname;
-	private JTextField ulname;
-	private JLabel label;
-	private JLabel label_1;
-	private JLabel label_2;
-	private JLabel label_3;
-	private JLabel label_4;
+	private JButton delete;
+	private JTextField deluser;
+	private JLabel lblDeleteUser;
 
 	/**
 	 * Launch the application.
@@ -81,14 +73,16 @@ public class usermanagement {
 		JLabel lblUserManagement = new JLabel("User Management");
 		lblUserManagement.setForeground(new Color(0, 0, 0));
 		lblUserManagement.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblUserManagement.setBounds(772, 67, 237, 64);
+		lblUserManagement.setBounds(386, 11, 237, 64);
 		frmUserManagement.getContentPane().add(lblUserManagement);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 67, 728, 107);
+		scrollPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane.setBounds(10, 85, 978, 124);
 		frmUserManagement.getContentPane().add(scrollPane);
 		
 		userstable = new JTable();
+		userstable.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		scrollPane.setViewportView(userstable);
 		userstable.setForeground(new Color(248, 248, 255));
 		userstable.setBackground(new Color(0, 100, 0));
@@ -193,69 +187,30 @@ public class usermanagement {
 		btnLogout.setBounds(882, 459, 89, 23);
 		frmUserManagement.getContentPane().add(btnLogout);
 		
-		update = new JButton("Update");
-		update.setBounds(662, 411, 105, 38);
-		frmUserManagement.getContentPane().add(update);
+		delete = new JButton("Delete");
+		delete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String username = deluser.getText();
+				deleteuser(username);
+				
+			}
+		});
+		delete.setBounds(662, 411, 105, 38);
+		frmUserManagement.getContentPane().add(delete);
 		
-		upassword = new JTextField();
-		upassword.setColumns(10);
-		upassword.setBounds(528, 429, 86, 20);
-		frmUserManagement.getContentPane().add(upassword);
+		deluser = new JTextField();
+		deluser.setColumns(10);
+		deluser.setBounds(505, 429, 118, 20);
+		frmUserManagement.getContentPane().add(deluser);
 		
-		uuser = new JTextField();
-		uuser.setColumns(10);
-		uuser.setBounds(395, 429, 86, 20);
-		frmUserManagement.getContentPane().add(uuser);
-		
-		urole = new JTextField();
-		urole.setColumns(10);
-		urole.setBounds(279, 429, 86, 20);
-		frmUserManagement.getContentPane().add(urole);
-		
-		ufname = new JTextField();
-		ufname.setColumns(10);
-		ufname.setBounds(20, 429, 86, 20);
-		frmUserManagement.getContentPane().add(ufname);
-		
-		ulname = new JTextField();
-		ulname.setColumns(10);
-		ulname.setBounds(153, 429, 86, 20);
-		frmUserManagement.getContentPane().add(ulname);
-		
-		label = new JLabel("Firstname");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.BLACK);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label.setBounds(24, 391, 79, 21);
-		frmUserManagement.getContentPane().add(label);
-		
-		label_1 = new JLabel("Lastname");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.BLACK);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_1.setBounds(157, 391, 79, 21);
-		frmUserManagement.getContentPane().add(label_1);
-		
-		label_2 = new JLabel("Role");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(Color.BLACK);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_2.setBounds(283, 391, 79, 21);
-		frmUserManagement.getContentPane().add(label_2);
-		
-		label_3 = new JLabel("Username");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setForeground(Color.BLACK);
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_3.setBounds(398, 391, 79, 21);
-		frmUserManagement.getContentPane().add(label_3);
-		
-		label_4 = new JLabel("Password");
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setForeground(Color.BLACK);
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_4.setBounds(531, 391, 79, 21);
-		frmUserManagement.getContentPane().add(label_4);
+		lblDeleteUser = new JLabel("Delete User");
+		lblDeleteUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDeleteUser.setForeground(Color.BLACK);
+		lblDeleteUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDeleteUser.setBounds(505, 391, 105, 21);
+		frmUserManagement.getContentPane().add(lblDeleteUser);
 
 	}
 	
@@ -300,6 +255,23 @@ public class usermanagement {
 			role.setText("");
 			username.setText("");
 			password.setText("");
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+	
+	private void deleteuser(String user) {
+		PreparedStatement st = null;
+		try {
+			String sql = "delete from users where Username = ?";
+			st = conn.prepareStatement(sql);
+			st.setString(1, user);
+			st.execute();
+			JOptionPane.showMessageDialog(null, "User Deleted");
+			showdata();
+			deluser.setText("");
+			
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -40,6 +41,8 @@ public class playermanagement {
 	private JTable players;
 	private JTextField id;
 	private JTextField position;
+	private JTextField delid;
+	private JTextField searchid;
 
 	/**
 	 * Launch the application.
@@ -56,7 +59,7 @@ public class playermanagement {
 	 */
 	public playermanagement() {
 		initialize();
-		showdata();
+		viewplayer();
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class playermanagement {
 		frmPlayerManagement = new JFrame();
 		frmPlayerManagement.getContentPane().setBackground(new Color(248, 248, 255));
 		frmPlayerManagement.setTitle("Player Management");
-		frmPlayerManagement.setBounds(100, 100, 1025, 549);
+		frmPlayerManagement.setBounds(100, 100, 1025, 637);
 		frmPlayerManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlayerManagement.getContentPane().setLayout(null);
 		
@@ -154,7 +157,7 @@ public class playermanagement {
 			}
 		});
 		
-		btnAddPlayer.setBounds(773, 310, 105, 38);
+		btnAddPlayer.setBounds(774, 351, 105, 38);
 		frmPlayerManagement.getContentPane().add(btnAddPlayer);
 		
 		JLabel label_1 = new JLabel("Firstname");
@@ -206,7 +209,7 @@ public class playermanagement {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		button_1.setBounds(910, 476, 89, 23);
+		button_1.setBounds(894, 549, 105, 38);
 		frmPlayerManagement.getContentPane().add(button_1);
 		
 		
@@ -260,6 +263,127 @@ public class playermanagement {
 		lblPosition_1.setBounds(538, 380, 79, 21);
 		frmPlayerManagement.getContentPane().add(lblPosition_1);
 		
+		JButton deleteplayer = new JButton("Delete Player");
+		deleteplayer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int playerid = Integer.parseInt(delid.getText());
+				
+				PlayerManagementFacade ManagePlayer = new PlayerManagementFacade();
+				
+				ManagePlayer.DeletePlayer(playerid);
+				JOptionPane.showMessageDialog(null, "Player Deleted");
+				viewplayer();
+				delid.setText("");
+			}
+			
+		});
+		deleteplayer.setBounds(27, 481, 138, 38);
+		frmPlayerManagement.getContentPane().add(deleteplayer);
+		
+		delid = new JTextField();
+		delid.setColumns(10);
+		delid.setBounds(194, 499, 96, 20);
+		frmPlayerManagement.getContentPane().add(delid);
+		
+		JLabel lblIdNumber = new JLabel("ID Number");
+		lblIdNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIdNumber.setForeground(Color.BLACK);
+		lblIdNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblIdNumber.setBounds(185, 468, 116, 21);
+		frmPlayerManagement.getContentPane().add(lblIdNumber);
+		
+		searchid = new JTextField();
+		searchid.setColumns(10);
+		searchid.setBounds(501, 499, 96, 20);
+		frmPlayerManagement.getContentPane().add(searchid);
+		
+		JLabel label = new JLabel("ID Number");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.BLACK);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label.setBounds(492, 468, 116, 21);
+		frmPlayerManagement.getContentPane().add(label);
+		JButton btnSearchPlayer = new JButton("Search Player");
+		btnSearchPlayer.setBounds(349, 481, 138, 38);
+		frmPlayerManagement.getContentPane().add(btnSearchPlayer);
+		
+		JButton update = new JButton("Update Player");
+		update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		update.setBounds(774, 351, 144, 38);
+		update.setVisible(false);
+		frmPlayerManagement.getContentPane().add(update);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				viewplayer();
+				fname.setText("");
+				lname.setText("");
+				team.setText("");
+				status.setText("");
+				height.setText("");
+				age.setText("");
+				thrp.setText("");
+				frthrw.setText("");
+				points.setText("");
+				fouls.setText("");
+				position.setText("");
+				id.setText("");
+			}
+		});
+		btnRefresh.setBounds(910, 11, 89, 23);
+		frmPlayerManagement.getContentPane().add(btnRefresh);
+		
+		
+		btnSearchPlayer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int playerid = Integer.parseInt(searchid.getText());
+				PlayerManagementFacade ManagePlayer = new PlayerManagementFacade();
+				
+				ResultSet st = ManagePlayer.SearchPlayer(playerid);
+				
+				players.setModel(DbUtils.resultSetToTableModel(st));
+				
+				
+				
+				try {
+					ResultSet rst = ManagePlayer.SearchPlayer(playerid);	
+					rst.next();
+					fname.setText(rst.getString("firstname"));
+					lname.setText(rst.getString("lastname"));
+					team.setText(rst.getString("team"));
+					status.setText(rst.getString("status"));
+					height.setText(rst.getString("height"));
+					age.setText(rst.getString("age"));
+					thrp.setText(rst.getString("threepointers"));
+					frthrw.setText(rst.getString("freethrows"));
+					points.setText(rst.getString("points"));
+					fouls.setText(rst.getString("fouls"));
+					position.setText(rst.getString("position"));
+					id.setText(rst.getString("id"));
+					update.setVisible(true);
+					btnAddPlayer.setVisible(false);
+					
+				} catch(Exception p) {
+					JOptionPane.showMessageDialog(null, p.getMessage());
+				}
+				
+				
+				players.repaint();
+				searchid.setText("");
+				
+				
+			}
+		});
+		
+		
 		
 		btnAddPlayer.addMouseListener(new MouseAdapter() {
 			@Override
@@ -283,7 +407,7 @@ public class playermanagement {
 				PlayerManagementFacade ManagePlayer = new PlayerManagementFacade();
 				
 				ManagePlayer.CreatePlayer(fn, ln, te, st, he, ag, threes, fthrows, point, foul, po, pid);
-				showdata();
+				viewplayer();
 				
 				fname.setText("");
 				lname.setText("");
@@ -301,7 +425,7 @@ public class playermanagement {
 		});
 	}
 	
-	private void showdata() {
+	private void viewplayer() {
 		try {
 			
 			
@@ -319,4 +443,6 @@ public class playermanagement {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
+	
+	
 }
